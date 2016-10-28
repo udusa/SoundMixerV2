@@ -3,9 +3,9 @@
 2,עוצמת אות תחילית,Init_Sig_dB,50,The first Word will be at 50 dB,,,,,,,,,,,,,,,,
 3,ערך SNR ראשוני,Init_SNR_dB,15,The first Noise will be at 35 dB,-4,,,,,,,,,,,,,,,
 4,שיטת שינוי SNR,Up_Down_Sig,1,can be just 1 or 2,,,,,,,,,,,,,,,,
-5,שם קובץ רעש,Noise_File,noise.wav,19,,,,,,,,,,,,,,,,
-6,רשימת קובצי מילים,List_of_Words,4,file1.wav,file2.wav,file3.wav,file4.wav,,,,,,,,,,,,,
+5,שם קובץ רעש,Noise_Files,noise.wav,19,,,,,,,,,,,,,,,,
+6,רשימת קובצי מילים,List_of_Words_Files,4,file1.wav,file2.wav,file3.wav,file4.wav,,,,,,,,,,,,,
 7,אופן ערבוב הרשימות ,Order_of_lists,1,"1 ordered, 0 random",,,,,,,,,,,,,,,,
 8,מדרגות עוצמה,Levels_of_SNR,17,2.5,2.5,2,2,1.5,1.5,1,1,1,1,1,0.5,0.5,0.5,0.5,0.5,0.5
 9,שם הבודק,Tester_name,"""String1""",,,,,,,,,,,,,,,,,
-10,שם הנבדק,,"""String2""",,,,,,,,,,,,,,,,,
+10,שם הנבדק,Tested_name,"""String2""",,,,,,,,,,,,,,,,,

@@ -1,10 +1,6 @@
+package GUI;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.ScrollPane;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -15,8 +11,14 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import utils.Consts;
+
 public class MainSoundPannel extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JLabel lblTime, lblVolume;
 	JSlider sliderTime, sliderVolume;
 	private JList<String> fileList;
@@ -26,19 +28,16 @@ public class MainSoundPannel extends JPanel {
 	 */
 	public MainSoundPannel(String title) {
 
-		lblTime = new JLabel("Time : ");
+		lblTime = new JLabel(Consts.LBL_TIME);
 		lblTime.setFont(new Font("Consolas", Font.BOLD, 16));
-		lblVolume = new JLabel("Volume : ");
+		lblVolume = new JLabel(Consts.LBL_VOLUME);
 		lblVolume.setFont(new Font("Consolas", Font.BOLD, 16));
 
 		sliderTime = new JSlider();
 		sliderVolume = new JSlider();
 		sliderVolume.setOrientation(SwingConstants.VERTICAL);
 		
-
-		
 		fileList = new JList<String>();
-		
 		
 		//String[] data = {"1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3"};
 		//fileList.setListData(data);
@@ -54,7 +53,7 @@ public class MainSoundPannel extends JPanel {
 	private void initLayout(){
 		
 		JScrollPane jScrollPane = new JScrollPane(fileList);
-		JLabel lblFileList = new JLabel("Files :");
+		JLabel lblFileList = new JLabel(Consts.LBL_FILE_LIST);
 		lblFileList.setFont(new Font("Consolas", Font.BOLD, 16));
 		
 		GroupLayout groupLayout = new GroupLayout(this);
