@@ -23,6 +23,7 @@ public class SoundMixerMainWindow extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	private MainSoundPannel noisePanel,wordsPanel;
+	private Configuration config;
 
 	/**
 	 * Launch the application.
@@ -73,7 +74,6 @@ public class SoundMixerMainWindow extends JFrame implements ActionListener{
 		
 		menuBar.add(menuFile);
 		setJMenuBar(menuBar);
-		
 	}
 	
 	private File loadFile(){
@@ -91,9 +91,8 @@ public class SoundMixerMainWindow extends JFrame implements ActionListener{
 		if(e.getActionCommand().equals(Consts.LOAD_CSV)){
 			try{
 				File f = loadFile();
-				System.out.println(f);
 				try {
-					new Configuration(f);
+					config = new Configuration(f);
 				} catch (WrongFileExeption e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

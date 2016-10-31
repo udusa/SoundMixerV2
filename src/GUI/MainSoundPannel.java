@@ -11,9 +11,10 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import interfaces.AudioUpdater;
 import utils.Consts;
 
-public class MainSoundPannel extends JPanel {
+public class MainSoundPannel extends JPanel implements AudioUpdater{
 	
 	/**
 	 * 
@@ -34,6 +35,7 @@ public class MainSoundPannel extends JPanel {
 		lblVolume.setFont(new Font("Consolas", Font.BOLD, 16));
 
 		sliderTime = new JSlider();
+		sliderTime.setValue(0);
 		sliderVolume = new JSlider();
 		sliderVolume.setOrientation(SwingConstants.VERTICAL);
 		
@@ -48,6 +50,30 @@ public class MainSoundPannel extends JPanel {
 	    initLayout();
 		
 
+	}
+	@Override
+	public void updateTimeLbl(String time) {
+		// TODO Auto-generated method stub
+		lblTime.setText(Consts.LBL_TIME+time);
+	}
+	
+	@Override
+	public void updateSlider(int percentage) {
+		// TODO Auto-generated method stub
+		sliderTime.setValue(percentage);
+	}
+
+	@Override
+	public void updatePlayerStatus(PlayerStatus playerStatus) {
+		// TODO Auto-generated method stub
+		switch(playerStatus){
+		case START:
+			break;
+		case PAUSE:
+			break;
+		case STOP:
+			break;
+		}
 	}
 	
 	private void initLayout(){
@@ -100,4 +126,7 @@ public class MainSoundPannel extends JPanel {
 		);
 		setLayout(groupLayout);
 	}
+
+
+
 }

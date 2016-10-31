@@ -1,5 +1,6 @@
 package utils;
 
+
 public class Consts {
 	
 	public static final String LBL_TIME = "Time : ",LBL_VOLUME = "Volume db: ",LBL_FILE_LIST = "Files :",LOAD_CSV="Load CSV";
@@ -10,4 +11,7 @@ public class Consts {
 						 Levels_of_SNR="Levels_of_SNR",Tester_name="Tester_name",Tested_name="Tested_name";
 	
 	public static final String SOUND_PATH_PREFIX = "sounds/";
+	
+	public static double MICRO_TO_MIN_RATIO = (6*Math.pow(10, 7));
+	public static double MICRO_TO_SEC_RATIO = MICRO_TO_MIN_RATIO/60;
 }
