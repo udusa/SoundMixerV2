@@ -17,5 +17,5 @@ public class Consts {
 	
 	public static final String PLAY_BTN=">",PAUSE_BTN="||",STOP_BTN = "[]";
 	
-	public static final int SLIDER_RANGE = 100;
+	public static final double SLIDER_RANGE = 100;
 }

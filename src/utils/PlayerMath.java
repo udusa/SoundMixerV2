@@ -11,9 +11,10 @@ public class PlayerMath {
 	public static int timeProgress(long microsLength,long microsCurrent){
 		return (int)((microsCurrent/(double)microsLength) * 100);
 	}
-	public static int persenteageToDb(int presentage, double maxDb, double minDb) {
-		
-		return 0;
+	public static double persenteageToDb(int presentage, double maxDb, double minDb) {
+		double ratio = presentage/Consts.SLIDER_RANGE;
+		double range = maxDb-minDb;
+		return ratio*range + minDb;
 	}
 	
 }

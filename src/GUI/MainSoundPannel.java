@@ -16,15 +16,19 @@ import javax.swing.JSlider;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.SliderUI;
 
 import core.Player;
 import interfaces.AudioControler;
 import interfaces.AudioUpdater;
 import utils.Consts;
+import utils.PlayerMath;
 
-public class MainSoundPannel extends JPanel implements AudioUpdater,AudioControler,ListSelectionListener{
+public class MainSoundPannel extends JPanel implements AudioUpdater,AudioControler,ListSelectionListener,ChangeListener{
 	
 	/**
 	 * 
@@ -52,6 +56,10 @@ public class MainSoundPannel extends JPanel implements AudioUpdater,AudioControl
 		sliderTime = new JSlider();
 		sliderTime.setValue(0);
 		sliderVolume = new JSlider();
+		sliderVolume.addChangeListener(this);
+		
+		lblVolume.setText(Consts.LBL_VOLUME+"/50%");
+		
 		sliderVolume.setOrientation(SwingConstants.VERTICAL);
 		
 		fileList = new JList<File>();
@@ -83,6 +91,7 @@ public class MainSoundPannel extends JPanel implements AudioUpdater,AudioControl
 		File soundFile = fileList.getSelectedValue();
 		try {
 			player.setAudioFile(soundFile);
+			setVolume(sliderVolume.getValue());
 		} catch (UnsupportedAudioFileException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -165,6 +174,17 @@ public class MainSoundPannel extends JPanel implements AudioUpdater,AudioControl
 		return player.getMinDb();
 	}
 	
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		// TODO Auto-generated method stub
+			if(e.getSource().equals(sliderVolume)){
+				int presentage = sliderVolume.getValue();
+				setVolume(presentage);
+				int db = (int)PlayerMath.persenteageToDb(presentage, getMaxDb(), getMinDb());
+				lblVolume.setText(Consts.LBL_VOLUME+db+"/"+presentage+"%");
+			}
+	}
+	
 	private void initLayout(){
 		
 		JScrollPane jScrollPane = new JScrollPane(fileList);
@@ -179,15 +199,15 @@ public class MainSoundPannel extends JPanel implements AudioUpdater,AudioControl
 					.addComponent(sliderTime, GroupLayout.PREFERRED_SIZE, 312, GroupLayout.PREFERRED_SIZE)
 					.addGap(34)
 					.addComponent(sliderVolume, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
 					.addComponent(jScrollPane, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
 					.addGap(30))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(72)
 					.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-					.addGap(89)
-					.addComponent(lblVolume, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+					.addGap(41)
+					.addComponent(lblVolume, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
 					.addComponent(lblFileList, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
 					.addGap(85))
 		);
@@ -215,6 +235,7 @@ public class MainSoundPannel extends JPanel implements AudioUpdater,AudioControl
 		);
 		setLayout(groupLayout);
 	}
+
 
 
 

@@ -41,11 +41,7 @@ public class Player implements LineListener,AudioControler{
 		clip = (Clip) AudioSystem.getLine(info);
 		clip.addLineListener(this);
 		clip.open(sound);
-		
 		gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
-		System.out.println(gainControl.getMaximum());
-		System.out.println(gainControl.getMinimum());
-		
 	}
 	
 	@Override

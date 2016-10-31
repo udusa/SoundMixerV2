@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import utils.Consts;
 import utils.PlayerMath;
 
 public class PlayerMathTestss {
@@ -28,9 +29,22 @@ public class PlayerMathTestss {
 		final long currentMicros = 19216;
 		final long lengthMicros = 25000;
 		int presentege = PlayerMath.timeProgress(lengthMicros, currentMicros);
-		System.out.println(presentege);
 		assertEquals(76, presentege,delta);
 		
+		/*
+		 * 
+		 */
+		double maxDb = 6.065;
+		double minDb = -80;
+		int presentage = 0;
+		double db = PlayerMath.persenteageToDb(presentage, maxDb, minDb);
+		assertEquals(minDb,db,delta);
+		presentage = 50;
+		db = PlayerMath.persenteageToDb(presentage, maxDb, minDb);
+		assertEquals((maxDb+minDb)/2,db,delta);
+		presentage = 100;
+		db = PlayerMath.persenteageToDb(presentage, maxDb, minDb);
+		assertEquals(maxDb,db,delta);
 	}
 
 }
