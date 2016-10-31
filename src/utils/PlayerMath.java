@@ -11,5 +11,9 @@ public class PlayerMath {
 	public static int timeProgress(long microsLength,long microsCurrent){
 		return (int)((microsCurrent/(double)microsLength) * 100);
 	}
+	public static int persenteageToDb(int presentage, double maxDb, double minDb) {
+		
+		return 0;
+	}
 	
 }

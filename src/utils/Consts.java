@@ -16,4 +16,6 @@ public class Consts {
 	public static double MICRO_TO_SEC_RATIO = MICRO_TO_MIN_RATIO/60;
 	
 	public static final String PLAY_BTN=">",PAUSE_BTN="||",STOP_BTN = "[]";
+	
+	public static final int SLIDER_RANGE = 100;
 }

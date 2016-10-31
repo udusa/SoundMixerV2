@@ -2,14 +2,17 @@ package core;
 
 import java.io.File;
 import java.io.IOException;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
 import interfaces.AudioControler;
 import interfaces.AudioUpdater;
 import interfaces.AudioUpdater.PlayerStatus;
@@ -21,6 +24,7 @@ public class Player implements LineListener,AudioControler{
 	private long lastTimePos = 0;
 	private AudioUpdater audioUpdater;
 	private UpdaterThread updaterThread;
+	private FloatControl gainControl;
 
 	public Player(AudioUpdater audioUpdater) {
 		this.audioUpdater=audioUpdater;
@@ -37,6 +41,11 @@ public class Player implements LineListener,AudioControler{
 		clip = (Clip) AudioSystem.getLine(info);
 		clip.addLineListener(this);
 		clip.open(sound);
+		
+		gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+		System.out.println(gainControl.getMaximum());
+		System.out.println(gainControl.getMinimum());
+		
 	}
 	
 	@Override
@@ -74,6 +83,46 @@ public class Player implements LineListener,AudioControler{
 		lastTimePos = clip.getMicrosecondPosition();
 		clip.stop();
 	}
+	
+	@Override
+	public void setVolume(int presentage) {
+		// TODO Auto-generated method stub
+		setVolume(PlayerMath.persenteageToDb(presentage,getMaxDb(),getMinDb()));
+	}
+
+	@Override
+	public void setVolume(double db) {
+		// TODO Auto-generated method stub
+		gainControl.setValue((float)db);
+	}
+
+	@Override
+	public double getMaxDb() {
+		// TODO Auto-generated method stub
+		return gainControl.getMaximum();
+	}
+
+	@Override
+	public double getMinDb() {
+		// TODO Auto-generated method stub
+		return gainControl.getMinimum();
+	}
+	
+	@Override
+	public void update(LineEvent arg0) {
+		// TODO Auto-generated method stub
+		LineEvent.Type type = arg0.getType();
+		if(type.equals(LineEvent.Type.START)){
+			
+		}else if(type.equals(LineEvent.Type.STOP)){
+			audioUpdater.updatePlayerStatus(PlayerStatus.STOP);
+		}else if(type.equals(LineEvent.Type.OPEN)){
+			
+		}else if(type.equals(LineEvent.Type.CLOSE)){
+			
+		}
+		
+	}
 
 	private class UpdaterThread extends Thread {
 
@@ -104,20 +153,8 @@ public class Player implements LineListener,AudioControler{
 		}
 	}
 
-	@Override
-	public void update(LineEvent arg0) {
-		// TODO Auto-generated method stub
-		LineEvent.Type type = arg0.getType();
-		if(type.equals(LineEvent.Type.START)){
-			
-		}else if(type.equals(LineEvent.Type.STOP)){
-			audioUpdater.updatePlayerStatus(PlayerStatus.STOP);
-		}else if(type.equals(LineEvent.Type.OPEN)){
-			
-		}else if(type.equals(LineEvent.Type.CLOSE)){
-			
-		}
-		
-	}
+
+
+
 
 }

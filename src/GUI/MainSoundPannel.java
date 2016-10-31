@@ -144,6 +144,27 @@ public class MainSoundPannel extends JPanel implements AudioUpdater,AudioControl
 		}
 	}
 	
+	@Override
+	public void setVolume(int presentage) {
+		// TODO Auto-generated method stub
+		player.setVolume(presentage);
+	}
+	@Override
+	public void setVolume(double db) {
+		// TODO Auto-generated method stub
+		player.setVolume(db);
+	}
+	@Override
+	public double getMaxDb() {
+		// TODO Auto-generated method stub
+		return player.getMaxDb();
+	}
+	@Override
+	public double getMinDb() {
+		// TODO Auto-generated method stub
+		return player.getMinDb();
+	}
+	
 	private void initLayout(){
 		
 		JScrollPane jScrollPane = new JScrollPane(fileList);
@@ -194,6 +215,7 @@ public class MainSoundPannel extends JPanel implements AudioUpdater,AudioControl
 		);
 		setLayout(groupLayout);
 	}
+
 
 
 
