@@ -15,7 +15,7 @@ public class Consts {
 	public static double MICRO_TO_MIN_RATIO = (6*Math.pow(10, 7));
 	public static double MICRO_TO_SEC_RATIO = MICRO_TO_MIN_RATIO/60;
 	
-	public static final String PLAY_BTN=">",PAUSE_BTN="||",STOP_BTN = "[]";
+	public static final String PLAY_BTN=">",PAUSE_BTN="||",STOP_BTN = "[]",VI_BTN="v",X_BTN="x";
 	
 	public static final double SLIDER_RANGE = 100;
 }

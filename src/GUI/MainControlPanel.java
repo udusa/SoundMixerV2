@@ -19,7 +19,7 @@ public class MainControlPanel extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton playPauseBtn, stopBtn;
+	private JButton playPauseBtn, stopBtn,viBtn,xBtn;
 	private ArrayList<AudioControler> audioControlers;
 
 	/**
@@ -33,12 +33,19 @@ public class MainControlPanel extends JPanel implements ActionListener {
 		playPauseBtn = new JButton(">");
 		playPauseBtn.addActionListener(this);
 		playPauseBtn.setEnabled(false);
-		;
 		add(playPauseBtn);
 		stopBtn = new JButton("[]");
 		stopBtn.addActionListener(this);
 		stopBtn.setEnabled(false);
 		add(stopBtn);
+		
+		viBtn = new JButton(Consts.VI_BTN);
+		viBtn.addActionListener(this);
+		add(viBtn);
+		
+		xBtn = new JButton(Consts.X_BTN);
+		xBtn.addActionListener(this);
+		add(xBtn);
 	}
 
 	public void setAudioConteler(AudioControler audioControler) {
@@ -62,7 +69,12 @@ public class MainControlPanel extends JPanel implements ActionListener {
 		} else if (e.getActionCommand().equals(Consts.STOP_BTN)) {
 			playPauseBtn.setText(Consts.PLAY_BTN);
 			performAction(PlayerStatus.STOP);
+		} else if (e.getActionCommand().equals(Consts.VI_BTN)) {
+			System.out.println("V");
+		} else if (e.getActionCommand().equals(Consts.X_BTN)) {
+			System.out.println("X");
 		}
+		
 	}
 
 	public void performAction(PlayerStatus playerStatus) {

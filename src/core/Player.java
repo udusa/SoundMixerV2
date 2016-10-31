@@ -128,6 +128,10 @@ public class Player implements LineListener,AudioControler{
 		public void run() {
 			long clipLength = clip.getMicrosecondLength();
 			long currentTime = lastTimePos;
+			String soundTime;
+			double min = PlayerMath.microToMin(clipLength);
+			double sec = PlayerMath.microToSec(clipLength);
+			soundTime = ""+(int)min+":"+(int)sec;
 			while(clipLength > currentTime && !stop){
 				currentTime = clip.getMicrosecondPosition();
 				try {
@@ -137,10 +141,10 @@ public class Player implements LineListener,AudioControler{
 					e.printStackTrace();
 				}
 				String timer;
-				double min = PlayerMath.microToMin(currentTime);
-				double sec = PlayerMath.microToSec(currentTime);
+				min = PlayerMath.microToMin(currentTime);
+				sec = PlayerMath.microToSec(currentTime);
 				timer = ""+(int)min+":"+(int)sec;
-				audioUpdater.updateTimeLbl(timer);
+				audioUpdater.updateTimeLbl(timer+"/"+soundTime);
 				audioUpdater.updateSlider(PlayerMath.timeProgress(clipLength, currentTime));
 			}
 		}
