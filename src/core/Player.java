@@ -2,7 +2,6 @@ package core;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -11,19 +10,19 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JSlider;
-
+import interfaces.AudioControler;
 import interfaces.AudioUpdater;
+import interfaces.AudioUpdater.PlayerStatus;
 import utils.PlayerMath;
 
-public class Player implements LineListener{
+public class Player implements LineListener,AudioControler{
 
-	private JSlider timeSlider;
 	private Clip clip;
 	private long lastTimePos = 0;
 	private AudioUpdater audioUpdater;
+	private UpdaterThread updaterThread;
 
-	Player(AudioUpdater audioUpdater) {
+	public Player(AudioUpdater audioUpdater) {
 		this.audioUpdater=audioUpdater;
 	}
 
@@ -40,19 +39,43 @@ public class Player implements LineListener{
 		clip.open(sound);
 	}
 	
+	@Override
 	public void startPlaying(){
-		
+		try{
+			updaterThread.stopThread();
+		}catch (NullPointerException e) {
+			// TODO: handle exception
+		}
+		clip.setMicrosecondPosition(lastTimePos);
+		updaterThread = new UpdaterThread();
+		updaterThread.start();
+		clip.start();
 	}
 	
+	@Override
 	public void stopPlaying(){
-		
+		try{
+			updaterThread.stopThread();
+		}catch (NullPointerException e) {
+			// TODO: handle exception
+		}
+		clip.stop();
+		lastTimePos = 0;
+		audioUpdater.updateSlider(0);
 	}
 	
+	@Override
 	public void pausePlaying(){
-		
+		try{
+			updaterThread.stopThread();
+		}catch (NullPointerException e) {
+			// TODO: handle exception
+		}
+		lastTimePos = clip.getMicrosecondPosition();
+		clip.stop();
 	}
 
-	private class SliderUpdateThread extends Thread {
+	private class UpdaterThread extends Thread {
 
 		private volatile boolean stop = false;
 		
@@ -71,17 +94,14 @@ public class Player implements LineListener{
 				String timer;
 				double min = PlayerMath.microToMin(currentTime);
 				double sec = PlayerMath.microToSec(currentTime);
-				timer = ""+min+":"+sec;
+				timer = ""+(int)min+":"+(int)sec;
 				audioUpdater.updateTimeLbl(timer);
 				audioUpdater.updateSlider(PlayerMath.timeProgress(clipLength, currentTime));
 			}
 		}
-		
 		public void stopThread(){
 			stop = true;
 		}
-		
-		
 	}
 
 	@Override
@@ -91,7 +111,7 @@ public class Player implements LineListener{
 		if(type.equals(LineEvent.Type.START)){
 			
 		}else if(type.equals(LineEvent.Type.STOP)){
-			
+			audioUpdater.updatePlayerStatus(PlayerStatus.STOP);
 		}else if(type.equals(LineEvent.Type.OPEN)){
 			
 		}else if(type.equals(LineEvent.Type.CLOSE)){

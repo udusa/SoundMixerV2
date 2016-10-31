@@ -24,6 +24,7 @@ public class SoundMixerMainWindow extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private MainSoundPannel noisePanel,wordsPanel;
 	private Configuration config;
+	private MainControlPanel controlPanel;
 
 	/**
 	 * Launch the application.
@@ -49,15 +50,18 @@ public class SoundMixerMainWindow extends JFrame implements ActionListener{
 	public SoundMixerMainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 700, 700);
+		setBounds(100, 100, 700, 800);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		
 		noisePanel = new MainSoundPannel("Noise");
 		wordsPanel = new MainSoundPannel("Words");
-		
+		controlPanel = new MainControlPanel();
+		controlPanel.setAudioConteler(noisePanel);
+		controlPanel.setAudioConteler(wordsPanel);
 		getContentPane().add(noisePanel);
 		getContentPane().add(wordsPanel);
+		getContentPane().add(controlPanel);
 //		setContentPane(noisePanel);
 		
 		initMenu();
@@ -93,6 +97,9 @@ public class SoundMixerMainWindow extends JFrame implements ActionListener{
 				File f = loadFile();
 				try {
 					config = new Configuration(f);
+					noisePanel.setAudioFiles(config.getNoiseFiles());
+					wordsPanel.setAudioFiles(config.getWordsFiles());
+					controlPanel.enableButtons();
 				} catch (WrongFileExeption e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -1,20 +1,30 @@
 package GUI;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import java.awt.Font;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import core.Player;
+import interfaces.AudioControler;
 import interfaces.AudioUpdater;
 import utils.Consts;
 
-public class MainSoundPannel extends JPanel implements AudioUpdater{
+public class MainSoundPannel extends JPanel implements AudioUpdater,AudioControler,ListSelectionListener{
 	
 	/**
 	 * 
@@ -22,12 +32,17 @@ public class MainSoundPannel extends JPanel implements AudioUpdater{
 	private static final long serialVersionUID = 1L;
 	JLabel lblTime, lblVolume;
 	JSlider sliderTime, sliderVolume;
-	private JList<String> fileList;
+	private JList<File> fileList;
+	private Player player;
+	private int fileIndex;
+	private boolean isPaused=false,isStop=false;
 
 	/**
 	 * Create the panel.
 	 */
 	public MainSoundPannel(String title) {
+		
+		player = new Player(this);
 
 		lblTime = new JLabel(Consts.LBL_TIME);
 		lblTime.setFont(new Font("Consolas", Font.BOLD, 16));
@@ -39,7 +54,8 @@ public class MainSoundPannel extends JPanel implements AudioUpdater{
 		sliderVolume = new JSlider();
 		sliderVolume.setOrientation(SwingConstants.VERTICAL);
 		
-		fileList = new JList<String>();
+		fileList = new JList<File>();
+		fileList.addListSelectionListener(this);
 		
 		//String[] data = {"1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3"};
 		//fileList.setListData(data);
@@ -51,6 +67,50 @@ public class MainSoundPannel extends JPanel implements AudioUpdater{
 		
 
 	}
+	public void setAudioFiles(ArrayList<File> list){
+		fileList.setListData(list.toArray(new File[0]));
+		fileList.setSelectedIndex(fileIndex);
+	}
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		// TODO Auto-generated method stub
+	}
+	@Override
+	public void startPlaying() {
+		// TODO Auto-generated method stub
+		isStop = false;
+		isPaused=false;
+		File soundFile = fileList.getSelectedValue();
+		try {
+			player.setAudioFile(soundFile);
+		} catch (UnsupportedAudioFileException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (LineUnavailableException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		player.startPlaying();
+	}
+	@Override
+	public void stopPlaying() {
+		// TODO Auto-generated method stub
+		isPaused=false;
+		isStop = true;
+		player.stopPlaying();
+		
+	}
+	@Override
+	public void pausePlaying() {
+		// TODO Auto-generated method stub
+		isPaused=true;
+		isStop = false;
+		player.pausePlaying();
+	}
+	
 	@Override
 	public void updateTimeLbl(String time) {
 		// TODO Auto-generated method stub
@@ -72,6 +132,14 @@ public class MainSoundPannel extends JPanel implements AudioUpdater{
 		case PAUSE:
 			break;
 		case STOP:
+			if(!isPaused){
+				fileIndex = (fileIndex+1)%fileList.getModel().getSize();
+			}
+			fileList.setSelectedIndex(fileIndex);
+			System.out.println(fileIndex);
+			if(!isStop && !isPaused){
+				startPlaying();
+			}
 			break;
 		}
 	}
@@ -126,6 +194,8 @@ public class MainSoundPannel extends JPanel implements AudioUpdater{
 		);
 		setLayout(groupLayout);
 	}
+
+
 
 
 

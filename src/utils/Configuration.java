@@ -88,7 +88,6 @@ public class Configuration {
 		for (int i = 0; i < amount; i++) {
 			String fileName = names[i];
 			File soundFile = new File(Consts.SOUND_PATH_PREFIX + fileName);
-			System.out.println(soundFile.exists());
 			list.add(soundFile);
 		}
 		return list;
@@ -97,6 +96,16 @@ public class Configuration {
 	private ArrayList<File> shuffle(ArrayList<File> list) {
 		Collections.shuffle(list);
 		return list;
+	}
+
+	public ArrayList<File> getNoiseFiles() {
+		// TODO Auto-generated method stub
+		return noiseFileList;
+	}
+
+	public ArrayList<File> getWordsFiles() {
+		// TODO Auto-generated method stub
+		return wordsFileList;
 	}
 
 }
