@@ -135,7 +135,11 @@ public class Player implements LineListener,AudioControler{
 			String soundTime;
 			double min = PlayerMath.microToMin(clipLength);
 			double sec = PlayerMath.microToSec(clipLength);
-			soundTime = ""+(int)min+":"+(int)sec;
+			String sMin = ""+(int)min;
+			if(min < 10)sMin = "0"+(int)min;
+			String sSec = ""+(int)sec;
+			if(sec < 10)sMin = "0"+(int)sec;
+			soundTime = sMin+":"+sSec;
 			while(clipLength > currentTime && !stop){
 				currentTime = clip.getMicrosecondPosition();
 				try {
@@ -147,7 +151,11 @@ public class Player implements LineListener,AudioControler{
 				String timer;
 				min = PlayerMath.microToMin(currentTime);
 				sec = PlayerMath.microToSec(currentTime);
-				timer = ""+(int)min+":"+(int)sec;
+				String secStr = ""+(int)sec;
+				if(sec < 10)secStr = "0"+(int)sec;
+				String minStr = ""+(int)min;
+				if(min < 10)minStr = "0"+(int)min;
+				timer = minStr+":"+secStr;
 				audioUpdater.updateTimeLbl(timer+"/"+soundTime);
 				audioUpdater.updateSlider(PlayerMath.timeProgress(clipLength, currentTime));
 			}
@@ -155,6 +163,12 @@ public class Player implements LineListener,AudioControler{
 		public void stopThread(){
 			stop = true;
 		}
+	}
+
+	@Override
+	public String getTime() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

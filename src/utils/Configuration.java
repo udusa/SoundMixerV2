@@ -1,12 +1,15 @@
 package utils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class Configuration {
 
@@ -15,6 +18,8 @@ public class Configuration {
 	private boolean isRandom;
 	private double[] SNR_levels;
 	private String testerName, testedName;
+	private final String PARTICIPATES_HEADER = "Tester Name:,Tested Name:";
+	private final String RECORD_HEADER = "Sign,SNR,NoiseTimestamp,Signaltimestamp,NoiseDb,SignalDb";
 
 	public Configuration(File file) throws WrongFileExeption {
 
@@ -111,5 +116,25 @@ public class Configuration {
 	public double[] getSNR_levels() {
 		return SNR_levels;
 	}
+
+	public void saveRecord(File file, List<Record> records) {
+		// TODO Auto-generated method stub
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new FileWriter(file));
+			bw.write(PARTICIPATES_HEADER+"\n");
+			bw.write(testerName+","+testedName+"\n");
+			bw.write(RECORD_HEADER +"\n");
+			for(Record r : records){
+				bw.write(r.toString()+"\n");
+			}
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 }

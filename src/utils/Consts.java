@@ -3,7 +3,9 @@ package utils;
 
 public class Consts {
 	
-	public static final String LBL_TIME = "Time : ",LBL_VOLUME = "Volume db: ",LBL_FILE_LIST = "Files :",LOAD_CSV="Load CSV";
+	public static final String LBL_TIME = "Time : ",LBL_VOLUME = "Volume : "
+			,LBL_FILE_LIST = "Files :",LOAD_CSV="Load CSV",CLEAR_RECORD = "Clear Record",
+			SAVE_RECORD = "Save Record";
 
 	public static final String Init_Sig_dB="Init_Sig_dB",Init_SNR_dB="Init_SNR_dB",
 						 Up_Down_Sig="Up_Down_Sig",Noise_Files="Noise_Files",
@@ -18,4 +20,6 @@ public class Consts {
 	public static final String PLAY_BTN=">",PAUSE_BTN="||",STOP_BTN = "[]",VI_BTN="v",X_BTN="x";
 	
 	public static final double SLIDER_RANGE = 100;
+
+	public static final String LBL_SNR = "SNR : ";
 }

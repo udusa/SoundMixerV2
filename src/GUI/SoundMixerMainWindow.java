@@ -4,6 +4,8 @@ import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -73,7 +75,15 @@ public class SoundMixerMainWindow extends JFrame implements ActionListener{
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menuFile = new JMenu("File");
 
-		JMenuItem menuItem = new JMenuItem("Load CSV");
+		JMenuItem menuItem = new JMenuItem(Consts.LOAD_CSV);
+		menuFile.add(menuItem);
+		menuItem.addActionListener(this);
+		
+		menuItem = new JMenuItem(Consts.CLEAR_RECORD);
+		menuFile.add(menuItem);
+		menuItem.addActionListener(this);
+		
+		menuItem = new JMenuItem(Consts.SAVE_RECORD);
 		menuFile.add(menuItem);
 		menuItem.addActionListener(this);
 		
@@ -84,6 +94,19 @@ public class SoundMixerMainWindow extends JFrame implements ActionListener{
 	private File loadFile(){
 		File loadedFile = null;
 		FileDialog fd = new FileDialog(this, "Choose a config CSV file", FileDialog.LOAD);
+		fd.setVisible(true);
+		loadedFile = new File(fd.getFile());
+		return loadedFile;
+	}
+	
+	private File saveFile(){
+		File loadedFile = null;
+		FileDialog fd = new FileDialog(this, "Choose a config CSV file", FileDialog.SAVE);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyy-HHmmss");
+		Date date = new Date();
+		String filename = "SoundTestReport-"+dateFormat.format(date)+".csv";
+		System.out.println(dateFormat.format(date));
+		fd.setFile(filename);
 		fd.setVisible(true);
 		loadedFile = new File(fd.getFile());
 		return loadedFile;
@@ -105,10 +128,22 @@ public class SoundMixerMainWindow extends JFrame implements ActionListener{
 					controlPanel.setAlgorithm(al);
 				} catch (WrongFileExeption e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+//					e1.printStackTrace();
 				}
 			}catch (NullPointerException npe) {
-				
+//				npe.printStackTrace();
+			}
+		}else if(e.getActionCommand().equals(Consts.CLEAR_RECORD)){
+			System.out.println(controlPanel.getRecords().size());
+			controlPanel.clearRecord();
+			System.out.println(controlPanel.getRecords().size());
+		}else if(e.getActionCommand().equals(Consts.SAVE_RECORD)){
+			try{
+				File f = saveFile();
+				config.saveRecord(f,controlPanel.getRecords());
+			}catch (NullPointerException npe) {
+				// TODO: handle exception
+//				npe.printStackTrace();
 			}
 		}
 	}

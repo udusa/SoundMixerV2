@@ -60,7 +60,7 @@ public class MainSoundPannel extends JPanel
 		sliderVolume = new JSlider();
 		sliderVolume.addChangeListener(this);
 
-		lblVolume.setText(Consts.LBL_VOLUME + "/50%");
+		lblVolume.setText(Consts.LBL_VOLUME + "(db)/50%");
 
 		sliderVolume.setOrientation(SwingConstants.VERTICAL);
 
@@ -163,15 +163,27 @@ public class MainSoundPannel extends JPanel
 	@Override
 	public void setVolume(int presentage) {
 		// TODO Auto-generated method stub
-		player.setVolume(presentage);
 		sliderVolume.setValue(presentage);
+		try{
+			player.setVolume(presentage);
+		}catch (NullPointerException e) {
+			// TODO: handle exception
+//			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
 	public void setVolume(double db) {
 		// TODO Auto-generated method stub
-		player.setVolume(db);
 		sliderVolume.setValue(PlayerMath.dbToPresentage(db, getMaxDb(), getMinDb()));
+		try{
+			player.setVolume(db);
+		}catch (NullPointerException e) {
+			// TODO: handle exception
+//			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
@@ -193,7 +205,7 @@ public class MainSoundPannel extends JPanel
 			int presentage = sliderVolume.getValue();
 			setVolume(presentage);
 			int db = (int) PlayerMath.persenteageToDb(presentage, getMaxDb(), getMinDb());
-			lblVolume.setText(Consts.LBL_VOLUME + db + "/" + presentage + "%");
+			lblVolume.setText(Consts.LBL_VOLUME + db + "(db)/" + presentage + "%");
 		}
 	}
 
@@ -204,38 +216,49 @@ public class MainSoundPannel extends JPanel
 		lblFileList.setFont(new Font("Consolas", Font.BOLD, 16));
 
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup().addContainerGap()
-				.addComponent(sliderTime, GroupLayout.PREFERRED_SIZE, 312, GroupLayout.PREFERRED_SIZE).addGap(34)
-				.addComponent(sliderVolume, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-						GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-				.addComponent(jScrollPane, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE).addGap(30))
-				.addGroup(groupLayout.createSequentialGroup().addGap(72)
-						.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE).addGap(41)
-						.addComponent(lblVolume, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
-						.addComponent(lblFileList, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-						.addGap(85)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblTime)
-										.addComponent(lblFileList, GroupLayout.PREFERRED_SIZE, 20,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblVolume))
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup().addGap(77).addComponent(
-												sliderTime, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-										.addGroup(groupLayout.createSequentialGroup()
-												.addPreferredGap(ComponentPlacement.RELATED).addComponent(jScrollPane,
-														GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
-						.addGroup(groupLayout.createSequentialGroup().addGap(40).addComponent(sliderVolume,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addGap(60)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(sliderTime, GroupLayout.PREFERRED_SIZE, 312, GroupLayout.PREFERRED_SIZE)
+							.addGap(34)
+							.addComponent(sliderVolume, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+							.addComponent(jScrollPane, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
+							.addGap(30))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(32)
+							.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+							.addGap(41)
+							.addComponent(lblVolume, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+							.addComponent(lblFileList, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+							.addGap(85))))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblTime)
+								.addComponent(lblFileList, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblVolume))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(77)
+									.addComponent(sliderTime, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(jScrollPane, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(40)
+							.addComponent(sliderVolume, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(60))
+		);
 		setLayout(groupLayout);
 	}
 
@@ -243,6 +266,11 @@ public class MainSoundPannel extends JPanel
 	public double getCurrentDb() {
 		// TODO Auto-generated method stub
 		return player.getCurrentDb();
+	}
+
+	@Override
+	public String getTime() {
+		return lblTime.getText();
 	}
 
 }

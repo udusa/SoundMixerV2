@@ -29,6 +29,8 @@ public class Algorithm {
 		}
 		return index;
 	}
-	
+	public double getCurrentSNR(){
+		return SNR_levels[index];
+	}
 
 }
