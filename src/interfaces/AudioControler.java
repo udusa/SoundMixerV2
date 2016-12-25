@@ -11,5 +11,6 @@ public interface AudioControler {
 	
 	public double getMaxDb();
 	public double getMinDb();
+	public double getCurrentDb();
 
 }

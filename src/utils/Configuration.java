@@ -14,7 +14,7 @@ public class Configuration {
 	private int initDb, initSNR, upDownSig;
 	private boolean isRandom;
 	private double[] SNR_levels;
-	private String testerName,testedName;
+	private String testerName, testedName;
 
 	public Configuration(File file) throws WrongFileExeption {
 
@@ -58,7 +58,7 @@ public class Configuration {
 					int size = Integer.parseInt(data[1]);
 					SNR_levels = new double[size];
 					for (int i = 0; i < SNR_levels.length; i++) {
-						SNR_levels[i] = Double.parseDouble(data[2+i]);
+						SNR_levels[i] = Double.parseDouble(data[2 + i]);
 					}
 				} else if (header.equals(Consts.Tester_name)) {
 					testerName = data[1];
@@ -106,6 +106,10 @@ public class Configuration {
 	public ArrayList<File> getWordsFiles() {
 		// TODO Auto-generated method stub
 		return wordsFileList;
+	}
+
+	public double[] getSNR_levels() {
+		return SNR_levels;
 	}
 
 }

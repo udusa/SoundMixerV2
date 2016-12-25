@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 
+import core.Algorithm;
 import utils.Configuration;
 import utils.Consts;
 import utils.WrongFileExeption;
@@ -63,7 +64,7 @@ public class SoundMixerMainWindow extends JFrame implements ActionListener{
 		getContentPane().add(wordsPanel);
 		getContentPane().add(controlPanel);
 //		setContentPane(noisePanel);
-		
+				
 		initMenu();
 
 	}
@@ -99,7 +100,9 @@ public class SoundMixerMainWindow extends JFrame implements ActionListener{
 					config = new Configuration(f);
 					noisePanel.setAudioFiles(config.getNoiseFiles());
 					wordsPanel.setAudioFiles(config.getWordsFiles());
+					Algorithm al = new Algorithm(config.getSNR_levels());
 					controlPanel.enableButtons();
+					controlPanel.setAlgorithm(al);
 				} catch (WrongFileExeption e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

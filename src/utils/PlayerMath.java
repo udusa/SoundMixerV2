@@ -16,5 +16,9 @@ public class PlayerMath {
 		double range = maxDb-minDb;
 		return ratio*range + minDb;
 	}
+	public static int dbToPresentage(double db,double maxDb,double minDb){
+		double ratio = 100.0/(maxDb-minDb);
+		return (int)((db-minDb)*ratio);
+	}
 	
 }

@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import core.Algorithm;
 import interfaces.AudioControler;
 import interfaces.AudioUpdater.PlayerStatus;
 import utils.Consts;
@@ -19,15 +20,16 @@ public class MainControlPanel extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton playPauseBtn, stopBtn,viBtn,xBtn;
+	private JButton playPauseBtn, stopBtn, viBtn, xBtn;
 	private ArrayList<AudioControler> audioControlers;
+	private Algorithm algorithm;
 
 	/**
 	 * Create the panel.
 	 */
 	public MainControlPanel() {
 		TitledBorder titled = new TitledBorder("Controls");
-	    setBorder(titled);
+		setBorder(titled);
 		audioControlers = new ArrayList<>();
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		playPauseBtn = new JButton(">");
@@ -38,11 +40,11 @@ public class MainControlPanel extends JPanel implements ActionListener {
 		stopBtn.addActionListener(this);
 		stopBtn.setEnabled(false);
 		add(stopBtn);
-		
+
 		viBtn = new JButton(Consts.VI_BTN);
 		viBtn.addActionListener(this);
 		add(viBtn);
-		
+
 		xBtn = new JButton(Consts.X_BTN);
 		xBtn.addActionListener(this);
 		add(xBtn);
@@ -70,11 +72,28 @@ public class MainControlPanel extends JPanel implements ActionListener {
 			playPauseBtn.setText(Consts.PLAY_BTN);
 			performAction(PlayerStatus.STOP);
 		} else if (e.getActionCommand().equals(Consts.VI_BTN)) {
-			System.out.println("V");
+			changeSNR(true);
 		} else if (e.getActionCommand().equals(Consts.X_BTN)) {
-			System.out.println("X");
+			changeSNR(false);
 		}
-		
+	}
+
+	private void changeSNR(boolean toInc) {
+		AudioControler noise = audioControlers.get(0);
+		AudioControler sound = audioControlers.get(1);
+		noise.setVolume(50);
+		sound.setVolume(50);
+		double avgDb = noise.getCurrentDb() + sound.getCurrentDb();
+		avgDb /= 2.0;
+		System.out.println(avgDb);
+		double snr = 0;
+		if (toInc)
+			snr = algorithm.getHigherSNR() / 2;
+		else
+			snr = algorithm.getLowerSNR() / 2;
+		System.out.println(snr);
+		noise.setVolume(avgDb - snr);
+		sound.setVolume(avgDb + snr);
 	}
 
 	public void performAction(PlayerStatus playerStatus) {
@@ -91,6 +110,11 @@ public class MainControlPanel extends JPanel implements ActionListener {
 				break;
 			}
 		}
+	}
+
+	public void setAlgorithm(Algorithm al) {
+		// TODO Auto-generated method stub
+		this.algorithm = al;
 	}
 
 }

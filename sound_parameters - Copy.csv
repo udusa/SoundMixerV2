@@ -1,0 +1,11 @@
+0,"מערכת אבחון שמיעה, אוניברסיטת אריאל"
+1,שם פרמטר,param,value,Remark
+2,עוצמת אות תחילית,Init_Sig_dB,50,The first Word will be at 50 dB
+3,ערך SNR ראשוני,Init_SNR_dB,15,The first Noise will be at 35 dB,-4
+4,שיטת שינוי SNR,Up_Down_Sig,1,can be just 1 or 2
+5,שם קובץ רעש,Noise_Files,2,noise_car.wav,noise_tv.wav
+6,רשימת קובצי מילים,List_of_Words_Files,1,words_1.wav
+7,אופן ערבוב הרשימות ,Order_of_lists,1,"1 ordered, 0 random"
+8,מדרגות עוצמה,Levels_of_SNR,17,70,55,45,38,33,27,25,22,20,17,15,13,9,7,5,3,1
+9,שם הבודק,Tester_name,"""String1"""
+10,שם הנבדק,Tested_name,"""String2"""

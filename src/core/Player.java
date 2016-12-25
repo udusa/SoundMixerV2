@@ -104,6 +104,10 @@ public class Player implements LineListener,AudioControler{
 		return gainControl.getMinimum();
 	}
 	
+	public double getCurrentDb(){
+		return gainControl.getValue();
+	}
+	
 	@Override
 	public void update(LineEvent arg0) {
 		// TODO Auto-generated method stub
