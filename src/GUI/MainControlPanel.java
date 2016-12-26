@@ -151,7 +151,9 @@ public class MainControlPanel extends JPanel implements ActionListener {
 		timestampNoise = timestampNoise.substring(Consts.LBL_TIME.length(), timestampNoise.length());
 		String timestampSignal = sound.getTime();
 		timestampSignal = timestampSignal.substring(Consts.LBL_TIME.length(), timestampSignal.length());
-		Record r = new Record(sign,snr,timestampNoise,timestampSignal,noiseDb,signalDb); 
+		String noiseFileName = noise.getCurrentFileName();
+		String soundFileName = sound.getCurrentFileName();
+		Record r = new Record(sign,snr,timestampNoise,timestampSignal,noiseDb,signalDb,noiseFileName,soundFileName); 
 		records.add(r);
 		System.out.println(r);
 		

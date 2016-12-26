@@ -273,4 +273,9 @@ public class MainSoundPannel extends JPanel
 		return lblTime.getText();
 	}
 
+	@Override
+	public String getCurrentFileName() {
+		return player.getCurrentFileName();
+	}
+
 }

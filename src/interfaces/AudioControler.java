@@ -13,6 +13,8 @@ public interface AudioControler {
 	public double getMinDb();
 	public double getCurrentDb();
 	
+	public String getCurrentFileName();
+	
 	public String getTime();
 
 }

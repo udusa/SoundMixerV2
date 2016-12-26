@@ -10,11 +10,11 @@ public class Algorithm {
 	}
 	
 	public double getHigherSNR(){
-		return SNR_levels[inc()];
+		return SNR_levels[dec()];
 	}
 	
 	public double getLowerSNR(){
-		return SNR_levels[dec()];
+		return SNR_levels[inc()];
 	}
 	
 	private int inc(){

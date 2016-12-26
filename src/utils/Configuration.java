@@ -19,7 +19,7 @@ public class Configuration {
 	private double[] SNR_levels;
 	private String testerName, testedName;
 	private final String PARTICIPATES_HEADER = "Tester Name:,Tested Name:";
-	private final String RECORD_HEADER = "Sign,SNR,NoiseTimestamp,Signaltimestamp,NoiseDb,SignalDb";
+	private final String RECORD_HEADER = "Sign,SNR,NoiseTimestamp,Signaltimestamp,NoiseDb,SignalDb,Noise File,Sound File";
 
 	public Configuration(File file) throws WrongFileExeption {
 

@@ -25,9 +25,11 @@ public class Player implements LineListener,AudioControler{
 	private AudioUpdater audioUpdater;
 	private UpdaterThread updaterThread;
 	private FloatControl gainControl;
+	private String currentFileName;
 
 	public Player(AudioUpdater audioUpdater) {
 		this.audioUpdater=audioUpdater;
+		currentFileName = "None";
 	}
 
 	public void setAudioFile(File soundFile)
@@ -42,6 +44,7 @@ public class Player implements LineListener,AudioControler{
 		clip.addLineListener(this);
 		clip.open(sound);
 		gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+		currentFileName = soundFile.getName();
 	}
 	
 	@Override
@@ -169,6 +172,12 @@ public class Player implements LineListener,AudioControler{
 	public String getTime() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String getCurrentFileName() {
+		// TODO Auto-generated method stub
+		return currentFileName;
 	}
 
 
